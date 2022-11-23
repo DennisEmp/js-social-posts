@@ -78,7 +78,7 @@ posts.forEach((element) => {
         <div class="post__header">
             <div class="post-meta">                    
                 <div class="post-meta__icon">
-                    <img class="profile-pic" src="${element.author.image}" alt="capocchia">                    
+                    <img class="profile-pic" src="${element.author.image}" alt="">                    
                 </div>
                 <div class="post-meta__data">
                     <div class="post-meta__author">${element.author.name}</div>
@@ -99,7 +99,8 @@ posts.forEach((element) => {
                     </a>
                 </div>
                 <div class="likes__counter">
-                    Piace a <b id="like-counter-1" class="js-likes-counter">${element.likes}</b> persone
+                    Piace a <b id="like-counter-${element.id}" class="js-likes-counter">
+                    ${element.likes}</b> persone
                 </div>
             </div> 
         </div>            
@@ -112,10 +113,29 @@ posts.forEach((element) => {
 // MILESTONE 3 BUTTON
 
 let btnLike = document.querySelectorAll(".like-button");
+
+let decrease = 0;
+
 for (let i = 0; i < btnLike.length; i++){
     btnLike[i].addEventListener("click",
         function() {
-            btnLike[i].classList.add("blue");
+            btnLike[i].classList.toggle("blue");
+
+            let like = posts[i].likes;
+
+            let id = i + 1;
+
+            let counter = document.getElementById(`like-counter-${id}`);
+
+            counter.innerHTML = like + 1;
+
+            if(decrease === 0){
+                decrease ++;
+                counter.innerHTML = like + decrease;
+            }else if(decrease === 1){
+                decrease --;
+                counter.innerHTML = like + decrease;
+            }
         }
     );
 }
